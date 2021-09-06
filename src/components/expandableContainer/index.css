@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  /* padding-right: 50px; */
+}
+
+.title {
+  margin-right: 12px;
+  color: #777;
+  font-size: 14px;
+}
+
+.moreBtn {
+  margin-left: auto;
+  height: 20px;
+  width: 40px;
+  text-align: center;
+  line-height: 20px;
+  display: inline-block;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  color: #1890ff;
+}
+
+.moreContainer {
+  width: 360px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
