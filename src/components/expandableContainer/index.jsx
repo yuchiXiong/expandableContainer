@@ -34,32 +34,36 @@ class ExpandableContainer extends Component {
     this.resizeTimer = setTimeout(() => {
       this.props.dataSource.map(item => delete item[VISIBLE_TYPE]);
       this.resetRender();
-    }, 50);
+    }, 10);
   }
 
-  // ? 写这个东西的时候产生的疑惑
-  // ? 1. componentDidMount 这个生命周期里到底能不能获取 DOM 节点
   resetRender = () => {
     const { dataSource } = this.props;
-    const allCustomItem = this.containerRef.current.querySelectorAll('.customItem');
 
+    // 获取当前渲染的最后一个元素
     const needBeProcessItemIndex = dataSource.map((item, index) => item[VISIBLE_TYPE] === undefined && index).filter(item => item).pop();
     if (!needBeProcessItemIndex) {
       return;
     }
-    
-    const currentItemVisiable = Math.abs(this.moreBtnRef.current.offsetTop - this.containerRef.current.offsetTop) > Math.abs(this.moreBtnRef.current.offsetHeight - allCustomItem[0].offsetHeight);
 
-    if (currentItemVisiable) {
+    if (!this.checkMoreBtnFixedTop()) {
       dataSource[needBeProcessItemIndex][VISIBLE_TYPE] = 'visible';
     }
 
     this.forceUpdate(() => {
-      if (currentItemVisiable) {
+      if (!this.checkMoreBtnFixedTop()) {
         this.resetRender();
       }
     });
 
+  }
+
+  // 当当前更多按钮与容器距离视口顶部的高度差 大于 当前更多按钮与最后一个渲染元素的高度差时，视为当前更多按钮没有显示在正确的位置上
+  checkMoreBtnFixedTop = () => {
+    const allCustomItem = this.containerRef.current.querySelectorAll('.customItem');
+    const offsetHeight = Math.abs(allCustomItem[0].offsetHeight - this.moreBtnRef.current.offsetHeight) / 2;
+
+    return Math.abs(this.containerRef.current.getBoundingClientRect().top - this.moreBtnRef.current.getBoundingClientRect().top) === offsetHeight;
   }
 
   // getRecommendTag = () => {
