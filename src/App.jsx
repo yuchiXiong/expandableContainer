@@ -1,10 +1,14 @@
-// import Tooltip from 'rc-tooltip';
+import { useState } from 'react';
+import Slider from 'rc-slider';
 import ExpandableContainer from './components/expandableContainer';
 import MOCK_DATA from './mock.json';
 
+import 'rc-slider/assets/index.css';
 import './index.css';
 
 function App() {
+
+  const [row, setRow] = useState(5);
 
   return (
     <>
@@ -27,13 +31,23 @@ function App() {
       <hr />
 
       <h2>多行</h2>
+      <div
+        style={{
+          width: 300,
+          display: 'flex',
+          flexDirection: 'row'
+        }}
+      >
+        <span style={{ width: 50 }}>{row} 行</span>
+        <Slider value={row} min={1} max={5} defaultValue={5} onChange={(row) => setRow(row)} />
+      </div>
       <section className='section'>
         <ExpandableContainer
-          title='热门书籍'
+          title='年度热门书籍'
           dataSource={MOCK_DATA}
           renderItem={(item) => <p className='renderItem'>{item}</p>
           }
-          line={4}
+          line={row}
         />
       </section>
 
