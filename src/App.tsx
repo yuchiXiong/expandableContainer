@@ -8,7 +8,7 @@ import './index.css';
 
 function App() {
 
-  const [row, setRow] = useState(5);
+  const [row, setRow] = useState<number>(5);
 
   return (
     <>
@@ -50,7 +50,6 @@ function App() {
           line={row}
         />
       </section>
-
     </>
   );
 }
